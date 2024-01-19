@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps<ResultProps> = async (
     };
   } catch (error: unknown) {
     if ((error as Error).message === "city not found") {
-      // Redirect to the 404 page if the city not found
+      // Redirect to the city-not-found page if the city not found
       return {
         redirect: {
           // property
