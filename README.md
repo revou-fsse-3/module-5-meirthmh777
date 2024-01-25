@@ -1,40 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Create Unit testing
 
-## Getting Started
+Using Vitest and react testing library.
 
-First, run the development server:
+- install Vitest: npm install -D vitest
+- configure coverage: npm i -D @vitest/coverage-v8
+- configure anything important from vtest
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Running test
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- npm run test to run the test
+- npx vitest --coverage to run coverage using v8
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Unit testing for Page
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+testing page if there is "Home Page" text inside the index.tsx component.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- file ./src/pages/index.tsx
+- test file ./src/pages/index.test.tsx
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Unit testing for city-not-found
 
-## Learn More
+testing page if there is "Home Page" text inside the index.tsx component.
 
-To learn more about Next.js, take a look at the following resources:
+- file ./src/pages/weather/index.tsx
+- test file ./src/weather/index.test.tsx
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Unit testing for clock component
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- file ./src/components/Clock/index.tsx
+- test file ./src/components/Clock/index.test.tsx
