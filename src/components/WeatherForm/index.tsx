@@ -1,8 +1,8 @@
 import { FC, HTMLAttributes, PropsWithChildren } from "react";
-import Form, { ISubmitHandler } from "@common/Form";
-import Input from "@common/Input";
+import Form, { ISubmitHandler } from "../../common/Form";
+import Input from "../../common/Input";
 import * as Yup from "yup";
-import Button, { ButtonTypes } from "@common/Button";
+import Button, { ButtonTypes } from "../../common/Button";
 import { useRouter } from "next/router";
 
 interface indexProps extends HTMLAttributes<HTMLDivElement> {}

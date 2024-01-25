@@ -6,7 +6,7 @@ const CityNotFound = () => {
     <div className="text-center">
       <p className="text-3xl">Error</p>
       <p className="text-xl">City Not Found</p>
-      <Button ButtonType={ButtonTypes.FiveButton}>
+      <Button ButtonType={ButtonTypes.FiveButton} role="button">
         <Link href="/weather">Search another city</Link>
       </Button>
     </div>
