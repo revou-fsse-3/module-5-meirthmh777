@@ -33,7 +33,11 @@ const index: indexComponents = ({ data }) => {
   return (
     <>
       <h3 className="text-3xl font-bold text-white my-10 text-center">Daily</h3>
-      <Accordion allowZeroExpanded className="bg-transparent gap-5">
+      <Accordion
+        allowZeroExpanded
+        className="bg-transparent gap-5"
+        role="accordion"
+      >
         {data.list.splice(0, 7).map((item, idx) => (
           <AccordionItem key={idx}>
             <AccordionItemHeading>

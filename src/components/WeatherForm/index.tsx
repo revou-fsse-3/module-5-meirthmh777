@@ -8,14 +8,12 @@ import { useRouter } from "next/router";
 interface indexProps extends HTMLAttributes<HTMLDivElement> {}
 type indexComponents = FC<indexProps> & PropsWithChildren;
 const index: indexComponents = () => {
-  // useRouter hook is used to get access to the Next.js router object
-  // using it to push a new route with a query parameter based on the form input
   const router = useRouter();
 
   const handleSubmit: ISubmitHandler = (value, action) => {
     const [city] = Object.values(value) as string[];
-
     router.push(`weather/result?city=${city}`);
+
     action.resetForm();
   };
 
@@ -26,11 +24,12 @@ const index: indexComponents = () => {
         initialSchemas={yupSchemas}
         submitHandler={handleSubmit}
       >
-        <Input label="city" />
+        <Input label="city" role="city-input" />
         <Button
           type="submit"
           ButtonType={ButtonTypes.FiveButton}
           className="rounded-lg font-bold text-lg"
+          role="button"
         >
           Submit
         </Button>

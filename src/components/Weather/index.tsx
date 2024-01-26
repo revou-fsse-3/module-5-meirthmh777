@@ -1,21 +1,23 @@
 import { FC, HTMLAttributes } from "react";
 import { GetWeatherProps } from "../../libs/api/GetWeather";
-// import Clock from "@components/Clock";
 import dynamic from "next/dynamic";
+const Clock = dynamic(() => import("@/components/Clock"), { ssr: false });
 
-const Clock = dynamic(() => import("@components/Clock"), { ssr: false });
-interface indexProps extends HTMLAttributes<HTMLDivElement> {
+interface WeatherConditionProps extends HTMLAttributes<HTMLDivElement> {
   data: GetWeatherProps;
 }
-type indexComponents = FC<indexProps>;
-
-const index: indexComponents = ({ data, ...resProps }) => {
+type WeatherConditionComponents = FC<WeatherConditionProps>;
+const WeatherCondition: WeatherConditionComponents = ({
+  data,
+  ...resProps
+}) => {
   return (
     <div
       {...resProps}
       className={`flex items-center justify-center${
         resProps.className ? resProps.className : ""
       }`}
+      role="weather-condition"
     >
       <div className="flex justify-center bg-slate-700 text-white m-5 p-7 gap- rounded-lg  lg:w-6/12">
         <div className="flex-[1] text-center">
@@ -54,4 +56,4 @@ const index: indexComponents = ({ data, ...resProps }) => {
   );
 };
 
-export default index;
+export default WeatherCondition;

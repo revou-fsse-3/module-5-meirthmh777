@@ -1,43 +1,30 @@
 import { FC, HTMLAttributes, useEffect, useState } from "react";
-
-// function to display timezone based on the city searched
-function getFormattedTime(timezone = 0) {
-  const date = new Date();
-  // console.log(date.toLocaleDateString());
-  console.log(timezone);
-  const unixTimezoneOffset = timezone;
-  date.setUTCSeconds(date.getUTCSeconds() + unixTimezoneOffset);
-  const hours = date.getUTCHours();
-  const minutes = date.getUTCMinutes();
-  const seconds = date.getUTCSeconds();
-  return `${hours % 12 || 12}:${String(minutes).padStart(2, "0")}:${String(
-    seconds
-  ).padStart(2, "0")} ${hours >= 12 ? "PM" : "AM"}`;
-}
-interface indexProps extends HTMLAttributes<HTMLSpanElement> {
+import useGetFormattedTime from "./getFormatedTime";
+interface ClockProps extends HTMLAttributes<HTMLSpanElement> {
   timezone: number;
 }
-// useState and useEffect to state timezone and update timezone every 1 sec
-type indexComponents = FC<indexProps>;
-const index: indexComponents = ({ timezone, ...resProps }) => {
-  const [currentTime, setCurrentTime] = useState("");
+type ClockComponents = FC<ClockProps>;
+const Clock: ClockComponents = ({ timezone, ...resProps }) => {
+  const getFormattedTime = useGetFormattedTime();
+  const [currentTime, setCurrentTime] = useState("init text");
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(getFormattedTime(timezone));
     }, 1000);
     return () => clearInterval(interval);
   }, []);
+
   return (
     <span
       {...resProps}
       className={`${
         resProps.className ? resProps.className : "text-3xl font-bold"
       }`}
-      // data-testid="formatted time"
+      role="main"
     >
       {currentTime}
     </span>
   );
 };
 
-export default index;
+export default Clock;

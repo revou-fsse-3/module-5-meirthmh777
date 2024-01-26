@@ -1,55 +1,118 @@
-// render hooks
 import Index from "./index";
-import { describe, expect, test, vi } from "vitest";
-import { render, renderHook, screen, waitFor } from "@testing-library/react";
+import {
+  describe,
+  expect,
+  test,
+  vi,
+  beforeAll,
+  beforeEach,
+  afterEach,
+} from "vitest";
+import {
+  render,
+  renderHook,
+  screen,
+  waitFor,
+  act,
+} from "@/utils/react-testing-library";
+import { prettyDOM } from "@testing-library/dom";
+import Clock from "./index";
 
-describe("Index component", () => {
-  test("renders correctly currentTime from useState", () => {
-    const hook = renderHook(() => Index({ timezone: 0 })); //index has prop
-    expect(hook.result.current).toBeDefined(); // result property, and expect below actually to show currentTime
-    expect(hook.result.current).toMatchInlineSnapshot(`
-      <span
-        className="text-3xl font-bold"
-      >
-        
-      </span>
-    `);
+const mock = vi.hoisted(() => {
+  return {
+    getFormattedTimeMock: vi.fn(),
+  };
+});
+
+vi.mock("./getFormatedTime", () => {
+  return {
+    default: mock.getFormattedTimeMock, // hooks to return get formatted time
+  };
+});
+
+async function sleep(milliseconds: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, milliseconds);
   });
-  test("renders correctly currentTime each second", async () => {
-    render(<Index timezone={0} />);
-    await waitFor(() => {
-      const currentTime = screen.getAllByText(""); // should include regex?
-      expect(currentTime).toMatchInlineSnapshot(`
-        [
-          <body>
-            <div />
-            <div>
-              <span
-                class="text-3xl font-bold"
-              />
-            </div>
-          </body>,
-          <div />,
-          <div>
-            <span
-              class="text-3xl font-bold"
-            />
-          </div>,
-          <span
-            class="text-3xl font-bold"
-          />,
-        ]
-      `);
+}
+
+mock.getFormattedTimeMock.mockReturnValue((param: number) => {
+  console.log("get call with this param " + param);
+
+  return "halo";
+});
+describe("clock component ", () => {
+  beforeEach(() => {
+    render(<Clock timezone={0} />);
+  });
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+  test("clock in document ", () => {
+    waitFor(() => {
+      const clockElement = screen.getByRole("main");
+      expect(clockElement).toBeInTheDocument();
+      expect(mock.getFormattedTimeMock).toHaveBeenCalledOnce();
     });
   });
-  test("display real time", () => {
-    render(<Index timezone={0} />);
-    const realTime = new Date();
-    vi.setSystemTime(realTime);
-    const getContentTime = realTime.getTime();
-    expect(Date.now()).toBe(getContentTime);
+  test("text time in document ", async () => {
+    await sleep(1500);
+    const halo = screen.getByText("halo");
+    expect(halo).toBeInTheDocument();
+    expect(mock.getFormattedTimeMock).toHaveBeenCalledTimes(2);
+
+    // await sleep(1500);
   });
 });
+
+// describe("Index component", () => {
+//   test("renders correctly currentTime from useState", () => {
+
+//     const hook = renderHook(() => Index({ timezone: 0 })); //index has prop
+//     expect(hook.result.current).toBeDefined(); // result property, and expect below actually to show currentTime
+//     expect(hook.result.current).toMatchInlineSnapshot(`
+//       <span
+//         className="text-3xl font-bold"
+//       >
+
+//       </span>
+//     `);
+//   });
+//   test("renders correctly currentTime each second", async () => {
+//     render(<Index timezone={0} />);
+//     await waitFor(() => {
+//       const currentTime = screen.getAllByText(""); // should include regex?
+//       expect(currentTime).toMatchInlineSnapshot(`
+//         [
+//           <body>
+//             <div />
+//             <div>
+//               <span
+//                 class="text-3xl font-bold"
+//               />
+//             </div>
+//           </body>,
+//           <div />,
+//           <div>
+//             <span
+//               class="text-3xl font-bold"
+//             />
+//           </div>,
+//           <span
+//             class="text-3xl font-bold"
+//           />,
+//         ]
+//       `);
+//     });
+//   });
+//   test("display real time", () => {
+//     render(<Index timezone={0} />);
+//     const realTime = new Date();
+//     vi.setSystemTime(realTime);
+//     const getContentTime = realTime.getTime();
+//     expect(Date.now()).toBe(getContentTime);
+//   });
+// });
 
 //  --------- try 8 ---------------
 // expect(getContentTime).toMatchInlineSnapshot(`1706169124548`);
