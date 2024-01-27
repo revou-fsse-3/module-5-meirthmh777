@@ -5,6 +5,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 describe("CityNotFound", () => {
   test("has button and can be clicked", () => {
     // is this E2E????
+    //Kevin: nope. ini cuma test 1 bagian dari aplikasinya. lebi kearah integration test
     const { getByRole } = render(<CityNotFound />);
     const button = getByRole("button");
     fireEvent.click(button);
